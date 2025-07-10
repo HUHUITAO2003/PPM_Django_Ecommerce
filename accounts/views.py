@@ -28,3 +28,7 @@ def registrati_view(request):
         return render(request, 'registrati_venditore.html')
     else:
         return render(request, 'errore.html')
+
+
+def registrazione_acquirente_view(request):
+    return HttpResponse("sdf")

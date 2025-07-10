@@ -17,7 +17,7 @@ class Articolo(models.Model):
     nome = models.CharField(max_length=100)
     marca = models.CharField(max_length=100)
     prezzo = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(0.0)])
-    profilo = models.OneToOneField('Immagine', on_delete=models.PROTECT, related_name='immagine_profilo', null=True) #'Immagine' perché i due modelli si contengono a vicenda
+    profilo = models.OneToOneField('Immagine', on_delete=models.PROTECT, related_name='immagine_profilo', blank=True, null=True) #'Immagine' perché i due modelli si contengono a vicenda
     venditore = models.ForeignKey(Venditore, on_delete=models.CASCADE)
     categoria = models.CharField(max_length=2, choices=Categoria.choices, default=Categoria.GENERALE)
     descrizione = models.TextField()
