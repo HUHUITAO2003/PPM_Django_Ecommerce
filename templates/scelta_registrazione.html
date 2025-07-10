@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load filters %}
+
+{% block title %}Registrati{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'scelta_registrazione.css' %}?v={{ now|date:'U' }}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-4 accedi">
+                <form method="get" action="{% url 'registrati' %}">
+                    {% csrf_token %}
+                    <div>
+                        <p>Ti vuoi registrare come:</p>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="ruolo" id="acquirente" value="acquirente" checked>
+                        <label class="form-check-label" for="acquirente">
+                            Acquirente
+                        </label>
+                    </div>
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="radio" name="ruolo" id="venditore" value="venditore">
+                        <label class="form-check-label" for="venditore">
+                            Venditore
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary mb-3">Continua</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block navbar_right %}
+{% endblock %}
+
+
+

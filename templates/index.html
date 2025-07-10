@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}E-commerce{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'index.css' %}?v={{ now|date:'U' }}">
+{% endblock %}
+
+{% block content %}
+    <form method="get" action="{% url 'ricerca' %}">
+    {% csrf_token %}
+        <div class="search">
+
+            <h1 class="text-center">E-commerce</h1>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col">
+                        <input type="text" class="form-control" placeholder="Scrivi quel che vuoi cercare"
+                               name="keywords">
+                    </div>
+                    <div class="col col-auto">
+                        <button type="submit" class="btn btn-primary">Cerca</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+{% endblock %}

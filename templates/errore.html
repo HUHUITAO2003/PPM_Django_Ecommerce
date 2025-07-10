@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Errore{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'errore.css' %}?v={{ now|date:'U' }}">
+{% endblock %}
+
+{% block content %}
+    <h1>
+        Qualcosa è andato storto...
+    </h1>
+{% endblock %}

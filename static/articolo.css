@@ -1,0 +1,54 @@
+.contenuto{
+    margin-top: 5rem;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+s {
+    font-size: 1rem;
+}
+
+form {
+    margin: 1rem 0;
+}
+
+.breadcrumb {
+    margin: 1rem 0;
+}
+
+.stelle {
+    float: left;
+    position: relative;
+    width: 10.1rem;
+    height: 2rem;
+
+    margin: 0 1rem;
+
+    user-select: none;
+}
+
+
+.stelle > .not_filled {
+    position: absolute;
+    color: #ccc;
+}
+
+.stelle > .filled {
+    position: absolute;
+    color: #ffc107;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.valutazione {
+    display: flex;
+    font-size: 1.5rem;
+}
+
+p{
+    margin-bottom: 0.5rem;
+}
+

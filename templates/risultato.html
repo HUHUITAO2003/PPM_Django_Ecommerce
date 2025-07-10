@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load filters %}
+
+{% block title %}Ricerca{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'risultato.css' %}?v={{ now|date:'U' }}">
+{% endblock %}
+
+{% block content %}
+    <!-- path -->
+
+    <!-- Barra di ricerca -->
+    <form method="post" action="{% url 'ricerca' %}">
+        {% csrf_token %}
+        <div class="search">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col">
+                        <input type="text" class="form-control" placeholder="Scrivi quel che vuoi cercare"
+                               name="keywords">
+                    </div>
+                    <div class="col col-auto">
+                        <button type="submit" class="btn btn-primary">Cerca</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="container">
+        <p>Numero corrispondenze: {{ articoli|length }}</p>
+    </div>
+    <!-- Lista di articoli -->
+    <div class="container risultati">
+        <div class="row">
+            {% for articolo in articoli %}
+                <div class="col-3">
+                    <a href="{% url 'articolo' articolo.id %}"><div>
+                        <div class="card w-100">
+                            <img src="{{ articolo.profilo.immagine.url }}" class="card-img-top">
+                            <div class="card-body">
+                                {% if articolo.sconto_percentuale == 0 %}
+                                    <h5 class="card-title"><h1>{{ articolo.prezzo }}€</h1></h5>
+                                {% else %}
+                                    <h5 class="card-title">
+                                        <h1>{{ articolo.prezzo|calcolo_prezzo_scontato:articolo.sconto_percentuale }}€
+                                            <s>{{ articolo.prezzo }}€</s></h1></h5>
+                                {% endif %}
+
+                                <p class="card-text">{{ articolo.nome }}</p>
+                            </div>
+                        </div>
+                    </div></a>
+                </div>
+            {% endfor %}
+        </div>
+
+
+    </div>
+
+{% endblock %}

@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load filters %}
+
+{% block title %}{{ articolo.nome }}{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'articolo.css' %}?v={{ now|date:'U' }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
+{% endblock %}
+
+{% block content %}
+    <!-- path
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'home_page' %}">Home</a></li>
+                        <li class="breadcrumb-item">Ricerca</li>
+                        <li class="breadcrumb-item active">{{ articolo.nome }}</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>-->
+
+    <!-- Articolo -->
+    <div class="container contenuto">
+        <div class="row">
+
+            <div class="col-5">
+                <div class="carousel slide" id="carouselExample">
+                    <div class="carousel-inner">
+                        {% for immagine in articolo.immagine_set.all %}
+                            <div class="carousel-item{% if forloop.first %} active{% endif %}">
+                                <img src="{{ immagine.immagine.url }}" class="d-block w-100">
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample"
+                            data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample"
+                            data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="col-7">
+
+                <h1>{{ articolo.nome }}</h1>
+                <p>Marca: {{ articolo.marca }}</p>
+                <div class="valutazione">
+                    <p>{{ valutazione_media }}: </p>
+                    <div class="stelle">
+                        <div class="not_filled">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <div class="filled" style="width: calc({{ valutazione_media }} / 5 * 100%)">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                    </div>
+                    <p>({{ num_voti }})</p>
+                </div>
+
+                {% if articolo.sconto_percentuale == 0 %}
+                    <h1>{{ articolo.prezzo }}€</h1>
+                {% else %}
+                    <h1>{{ articolo.prezzo|calcolo_prezzo_scontato:articolo.sconto_percentuale }}€
+                        <s>{{ articolo.prezzo }}€</s>
+                    </h1>
+                {% endif %}
+                <form method="post" action="{% url 'acquisto' articolo.id %}">
+                    {% csrf_token %}
+                    <p>Num. disponibili: {{ articolo.num_articoli }}</p>
+                    <div class="acquista">
+                        <button type="submit" class="btn btn-warning">Acquista</button>
+                    </div>
+                </form>
+                <form method="get" action="{% url 'aggiungi_carrello' articolo.id %}">
+                    {% csrf_token %}
+                    <div class="carrello">
+                        <button type="submit" class="btn btn-danger">Aggiungi in Carrello</button>
+                    </div>
+                </form>
+
+            </div>
+
+
+
+
+            {% for articolo in articoli %}
+                <div class="col-3">
+                    <a href="{% url 'articolo' articolo.id %}">
+                        <div class="card w-100">
+                            <img src="{{ articolo.profilo.immagine.url }}" class="card-img-top">
+                            <div class="card-body">
+                                {% if articolo.sconto_percentuale == 0 %}
+                                    <h5 class="card-title"><h1>{{ articolo.prezzo }}€</h1></h5>
+                                {% else %}
+                                    <h5 class="card-title">
+                                        <h1>{{ articolo.prezzo|calcolo_prezzo_scontato:articolo.sconto_percentuale }}€
+                                            <s>{{ articolo.prezzo }}€</s></h1></h5>
+                                {% endif %}
+
+                                <p class="card-text">{{ articolo.nome }}</p>
+                                <a href="#" class="btn btn-primary">Acquista</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+
+
+    </div>
+
+{% endblock %}
