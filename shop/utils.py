@@ -9,5 +9,5 @@ def valutazione_media(articolo_id):
     else:
         for v in valutazione:
             tot += v.voto
-        return tot/valutazione.count(), valutazione.count()
+        return float(f"{tot/valutazione.count():.2g}"), valutazione.count()
 

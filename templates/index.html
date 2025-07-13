@@ -7,9 +7,29 @@
     <link rel="stylesheet" href="{% static 'index.css' %}?v={{ now|date:'U' }}">
 {% endblock %}
 
+{% block navbar_left %}
+
+    {% if perms.shop.puo_visualizzare_ordini %}
+        <li class="nav-item">
+            <a class="nav-link active" href="{% url 'ordini' %}">Ordini</a>
+        </li>
+    {% endif %}
+    {% if perms.shop.puo_visualizzare_carrello %}
+        <li class="nav-item">
+            <a class="nav-link active mr-3" href="{% url 'carrello' %}">Carrello</a>
+        <li class="nav-item">
+    {% endif %}
+{% if perms.shop.puo_aggiungere_articolo %}
+    <li class="nav-item">
+        <a class="nav-link active" href="{% url 'aggiungi_articolo' %}">Aggiungi articolo</a>
+    </li>
+{% endif %}
+{% endblock %}
+
+
 {% block content %}
     <form method="get" action="{% url 'ricerca' %}">
-    {% csrf_token %}
+        {% csrf_token %}
         <div class="search">
 
             <h1 class="text-center">E-commerce</h1>

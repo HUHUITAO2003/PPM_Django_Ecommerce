@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load filters %}
+
+{% block title %}Ricerca{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
+    <link rel="stylesheet" href="{% static 'ordini.css' %}?v={{ now|date:'U' }}">
+{% endblock %}
+
+{% block content %}
+    <!-- path -->
+    <h1>Carrello</h1>
+    <div class="container mt-4">
+        <p>Numero articoli: {{ lista|length }}</p>
+    </div>
+    <!-- Lista di articoli -->
+    <div class="container risultati">
+        <div class="row">
+            {% for l in lista %}
+                <div class="card mb-3">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src="{{ l.articolo.profilo.immagine.url }}" class="card-img-top">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ l.articolo.nome }}</h5>
+                                {% if l.articolo.sconto_percentuale == 0 %}
+                                    <h1>{{ l.articolo.prezzo }}€</h1>
+                                {% else %}
+                                    <h1>{{ l.articolo.prezzo|calcolo_prezzo_scontato:l.articolo.sconto_percentuale }}€
+                                        <s>{{ l.articolo.prezzo }}€</s>
+                                    </h1>
+                                {% endif %}
+
+                                <div class="valutazione">
+                                    <p>{{ l.media }}: </p>
+                                    <div class="stelle">
+                                        <div class="not_filled">
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                        </div>
+                                        <div class="filled" style="width: calc({{ l.media }} / 5 * 100%)">
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                        </div>
+                                    </div>
+                                    <p>({{ l.len }})</p>
+                                </div>
+                                <form method="post" action="{% url 'acquista' l.articolo.id %}">
+                                    {% csrf_token %}
+                                    <p>Num. disponibili: {{ l.articolo.num_articoli }}</p>
+                                    <div class="acquista mb-4">
+                                        <button type="submit" class="btn btn-warning">Acquista</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+
+        </div>
+
+
+    </div>
+
+{% endblock %}

@@ -13,7 +13,7 @@
     <!-- path -->
 
     <!-- Barra di ricerca -->
-    <form method="post" action="{% url 'ricerca' %}">
+    <form method="get" action="{% url 'ricerca' %}">
         {% csrf_token %}
         <div class="search">
             <div class="container">

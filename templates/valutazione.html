@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load filters %}
+
+{% block title %}Accedi{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
+    <link rel="stylesheet" href="{% static 'valutazione.css' %}?v={{ now|date:'U' }}">
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col">
+                <form method="post" action="{% url 'valuta' ordine_id%}">
+                    {% csrf_token %}
+                    <div class="valutazione"><p>Dai una valutazione: </p>
+                        <fieldset class="stelle">
+                            <input type="radio" id="star5" name="stelle" value="5"/>
+                            <label for="star5" title="5 stelle"><i class="fa-solid fa-star"></i></label>
+                            <input type="radio" id="star4" name="stelle" value="4"/>
+                            <label for="star4" title="4 stelle"><i class="fa-solid fa-star"></i></label>
+                            <input type="radio" id="star3" name="stelle" value="3"/>
+                            <label for="star3" title="3 stelle"><i class="fa-solid fa-star"></i></label>
+                            <input type="radio" id="star2" name="stelle" value="2"/>
+                            <label for="star2" title="2 stelle"><i class="fa-solid fa-star"></i></label>
+                            <input type="radio" id="star1" name="stelle" value="1"/>
+                            <label for="star1" title="1 stella"><i class="fa-solid fa-star"></i></label>
+                        </fieldset>
+                    </div>
+                    <div class="input-group commento mb-4">
+                        <span class="input-group-text">Commento</span>
+                        <textarea class="form-control" name="commento"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary mb-4">Valuta</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block navbar_right %}
+{% endblock %}
+
+
+

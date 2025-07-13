@@ -6,6 +6,10 @@
     background-color: white;
 }
 
-p{
+p {
     margin-top: 1rem;
+}
+
+form > div {
+    margin-bottom: 2rem;
 }

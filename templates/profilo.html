@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load filters %}
+
+{% block title %}Accedi{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'profilo_acquirente.css' %}?v={{ now|date:'U' }}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-10 profilo">
+                <form>
+                    {% for form in forms %}
+                        {{ form.as_div }}
+                    {% endfor %}
+                    {% if perms.utenti.puo_modificare_profilo_acquirente %}
+                        <a href="{% url 'modifica_profilo_acquirente' %}" class="btn btn-primary">Modifica</a>
+
+                    {% elif perms.utenti.puo_modificare_profilo_venditore %}
+                        <a href="{% url 'modifica_profilo_venditore' %}" class="btn btn-primary">Modifica</a>
+                    {% endif %}
+
+                    {% if perms.utenti.puo_aggiungere_credito %}
+                        <a class="btn btn-success active" href="{% url 'aggiungi_credito' %}">Ricarica credito</a>
+                    {% endif %}
+
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block navbar_right %}
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load filters %}
+
+{% block title %}Accedi{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'accedi.css' %}?v={{ now|date:'U' }}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-4 accedi">
+                <form method="post" action="{% url 'aggiungi_credito' %}">
+                    {% csrf_token %}
+                    <div class="mb-1">
+                        <label for="codice_carta" class="form-label">Codice carta</label>
+                        <input type="text" class="form-control" id="codice_carta" name="codice_carta" required>
+                    </div>
+                    {% if stato_ricarica == "successo" %}
+                            <div class="alert alert-success" role="alert">
+                                Ricarica effettua con successo!
+                            </div>
+                        {% elif stato_ricarica == "fallito" %}
+                            <div class="alert alert-danger" role="alert">
+                                Ricarica fallita.
+                            </div>
+                    {% endif %}
+                    <button type="submit" class="btn btn-primary">Carica</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block navbar_right %}
+{% endblock %}
+
+
+

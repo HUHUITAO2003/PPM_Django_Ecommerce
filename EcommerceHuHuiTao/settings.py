@@ -35,12 +35,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'articoli.apps.ArticoliConfig',
-    'utenti.apps.UtentiConfig',
-    'venditori.apps.VenditoriConfig',
+    'autenticazione.apps.AutenticazioneConfig',
     'shop.apps.ShopConfig',
     'pagine.apps.PagineConfig',
-    'accounts.apps.AccountsConfig',
+    'utenti.apps.UtentiConfig',
 ]
 
 MIDDLEWARE = [
@@ -100,6 +98,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = 'autenticazione.CustomUser'
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/

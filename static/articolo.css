@@ -1,5 +1,15 @@
-.contenuto{
+.contenuto {
     margin-top: 5rem;
+}
+
+.row > div {
+    padding-right: 0;
+}
+
+.informazioni {
+    background-color: white;
+    padding-left: 5rem;
+    padding-top: 1rem;
 }
 
 a {
@@ -9,10 +19,6 @@ a {
 
 s {
     font-size: 1rem;
-}
-
-form {
-    margin: 1rem 0;
 }
 
 .breadcrumb {
@@ -48,7 +54,7 @@ form {
     font-size: 1.5rem;
 }
 
-p{
+p {
     margin-bottom: 0.5rem;
 }
 

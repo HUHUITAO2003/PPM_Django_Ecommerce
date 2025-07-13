@@ -11,21 +11,6 @@
 {% endblock %}
 
 {% block content %}
-    <!-- path
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{% url 'home_page' %}">Home</a></li>
-                        <li class="breadcrumb-item">Ricerca</li>
-                        <li class="breadcrumb-item active">{{ articolo.nome }}</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
-    </div>-->
-
     <!-- Articolo -->
     <div class="container contenuto">
         <div class="row">
@@ -52,7 +37,7 @@
                 </div>
             </div>
 
-            <div class="col-7">
+            <div class="col-7 informazioni">
 
                 <h1>{{ articolo.nome }}</h1>
                 <p>Marca: {{ articolo.marca }}</p>
@@ -84,14 +69,14 @@
                         <s>{{ articolo.prezzo }}€</s>
                     </h1>
                 {% endif %}
-                <form method="post" action="{% url 'acquisto' articolo.id %}">
+                <form method="post" action="{% url 'acquista' articolo.id %}">
                     {% csrf_token %}
                     <p>Num. disponibili: {{ articolo.num_articoli }}</p>
-                    <div class="acquista">
+                    <div class="acquista mb-4">
                         <button type="submit" class="btn btn-warning">Acquista</button>
                     </div>
                 </form>
-                <form method="get" action="{% url 'aggiungi_carrello' articolo.id %}">
+                <form method="post" action="{% url 'aggiungi_carrello' articolo.id %}">
                     {% csrf_token %}
                     <div class="carrello">
                         <button type="submit" class="btn btn-danger">Aggiungi in Carrello</button>

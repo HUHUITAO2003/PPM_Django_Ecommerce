@@ -1,3 +1,11 @@
-body{
+body {
     background-color: #dee4eb;
+}
+
+.profilo {
+    padding: 0 1rem;
+}
+
+.errorlist {
+    color: red;
 }

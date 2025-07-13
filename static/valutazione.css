@@ -1,0 +1,39 @@
+.container {
+    width: 40rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    background-color: white;
+    padding: 3rem;
+}
+
+.commento{
+    height: 20rem;
+}
+
+.valutazione {
+    display: flex;
+    align-items: flex-end;
+}
+
+.stelle {
+    width: 14rem;
+    direction: rtl;
+    unicode-bidi: bidi-override;
+    font-size: 2rem;
+    user-select: none
+}
+
+.stelle input {
+    display: none;
+}
+
+.stelle label {
+    color: #ccc;
+    cursor: pointer;
+}
+
+.stelle input:checked ~ label,
+.stelle label:hover,
+.stelle label:hover ~ label {
+    color: #ffc107;
+}
