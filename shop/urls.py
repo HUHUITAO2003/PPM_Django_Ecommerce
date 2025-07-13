@@ -1,7 +1,7 @@
 from django.urls import path
 
 from shop.views import ordini_view, aggiungi_carrello_view, ricerca_view, articolo_view, acquista_view, errore_view, \
-    valutazione_view, valuta_view, carrello_view, aggiungi_articolo_view
+    valutazione_view, valuta_view, carrello_view, aggiungi_articolo_view, miei_articoli_view
 
 urlpatterns = [
     path("acquista/<int:articolo_id>/", acquista_view, name="acquista"),
@@ -14,4 +14,5 @@ urlpatterns = [
     path("errore/", errore_view, name="errore"),
     path("carrello/", carrello_view, name="carrello"),
     path("aggiungi_articolo/", aggiungi_articolo_view, name="aggiungi_articolo"),
+    path("miei_articoli", miei_articoli_view, name="miei_articoli"),
 ]

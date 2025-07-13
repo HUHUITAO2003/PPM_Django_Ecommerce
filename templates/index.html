@@ -21,9 +21,15 @@
     {% endif %}
 {% if perms.shop.puo_aggiungere_articolo %}
     <li class="nav-item">
-        <a class="nav-link active" href="{% url 'aggiungi_articolo' %}">Aggiungi articolo</a>
+        <a class="nav-link active" href="{% url 'miei_articoli' %}">I miei articoli</a>
     </li>
 {% endif %}
+    {% if perms.shop.puo_aggiungere_articolo %}
+        <li class="nav-item">
+            <a class="nav-link active" href="{% url 'aggiungi_articolo' %}">Aggiungi articolo</a>
+        </li>
+    {% endif %}
+
 {% endblock %}
 
 

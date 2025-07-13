@@ -69,20 +69,28 @@
                         <s>{{ articolo.prezzo }}€</s>
                     </h1>
                 {% endif %}
-                <form method="post" action="{% url 'acquista' articolo.id %}">
-                    {% csrf_token %}
                     <p>Num. disponibili: {{ articolo.num_articoli }}</p>
-                    <div class="acquista mb-4">
-                        <button type="submit" class="btn btn-warning">Acquista</button>
-                    </div>
-                </form>
+                    {% if perms.shop.puo_acquistare_articolo %}
+                        <div class="acquista mb-4">
+                            <a class="btn btn-warning" href="{% url 'acquista' articolo.id %}" >Acquista</a>
+                        </div>
+                    {% endif %}
+
+                    {% if perms.shop.puo_aggiungere_carrello %}
+                        <div class="carrello">
+                            <a href="{% url 'aggiungi_carrello' articolo.id %}" class="btn btn-danger">Aggiungi in Carrello</a>
+                        </div>
+                    {% endif %}
+            <!--
                 <form method="post" action="{% url 'aggiungi_carrello' articolo.id %}">
                     {% csrf_token %}
-                    <div class="carrello">
-                        <button type="submit" class="btn btn-danger">Aggiungi in Carrello</button>
-                    </div>
+                    {% if perms.shop.puo_aggiungere_carrello %}
+                        <div class="carrello">
+                            <button type="submit" class="btn btn-danger">Aggiungi in Carrello</button>
+                        </div>
+                    {% endif %}
                 </form>
-
+-->
             </div>
 
 

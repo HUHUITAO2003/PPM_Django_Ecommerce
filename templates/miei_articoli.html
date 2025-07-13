@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load filters %}
+
+{% block title %}Ricerca{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'risultato.css' %}?v={{ now|date:'U' }}">
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-3">
+        <h1>I miei articoli</h1>
+    </div>
+    <div class="container">
+        <p>Numero articoli: {{ articoli|length }}</p>
+    </div>
+    <!-- Lista di articoli -->
+    <div class="container risultati">
+        <div class="row">
+            {% for articolo in articoli %}
+                <div class="col-3">
+                    <a href="{% url 'articolo' articolo.id %}">
+                        <div>
+                            <div class="card w-100">
+                                <img src="{{ articolo.profilo.immagine.url }}" class="card-img-top">
+                                <div class="card-body">
+                                    {% if articolo.sconto_percentuale == 0 %}
+                                        <h5 class="card-title"><h1>{{ articolo.prezzo }}€</h1></h5>
+                                    {% else %}
+                                        <h5 class="card-title">
+                                            <h1>{{ articolo.prezzo|calcolo_prezzo_scontato:articolo.sconto_percentuale }}€
+                                                <s>{{ articolo.prezzo }}€</s></h1></h5>
+                                    {% endif %}
+
+                                    <p class="card-text">{{ articolo.nome }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+
+
+    </div>
+
+{% endblock %}

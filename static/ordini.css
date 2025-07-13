@@ -1,0 +1,38 @@
+.row > div {
+    padding-left: 0;
+}
+
+.informazioni {
+    background-color: white;
+    padding-left: 5rem;
+    padding-top: 1rem;
+}
+
+.stelle {
+    float: left;
+    position: relative;
+    width: 10.1rem;
+    height: 2rem;
+
+    margin: 0 1rem;
+
+    user-select: none;
+}
+
+
+.stelle > .not_filled {
+    position: absolute;
+    color: #ccc;
+}
+
+.stelle > .filled {
+    position: absolute;
+    color: #ffc107;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.valutazione {
+    display: flex;
+    font-size: 1.5rem;
+}

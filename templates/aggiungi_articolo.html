@@ -13,10 +13,17 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-10 ">
-                <form method="POST">
-                    {{ form.as_div }}
+                <form method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-primary">Salva articolo</button>
+                    {{ form.as_p }}
+                    {{ i_form.as_p }}
+
+                    {{ i_formset.management_form }}
+                    {% for form in i_formset %}
+                        {{ form.as_p }}
+                    {% endfor %}
+
+                    <button type="submit">Salva Articolo</button>
                 </form>
             </div>
         </div>

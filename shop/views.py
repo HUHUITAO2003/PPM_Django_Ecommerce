@@ -154,3 +154,13 @@ def aggiungi_articolo_view(request):
         i_form = ImmagineForm()
         i_formset = ImmagineFormSet(queryset=Immagine.objects.none())
     return render(request, "aggiungi_articolo.html", {"form": form, "i_form":i_form, "i_formset": i_formset})
+
+
+def miei_articoli_view(request):
+    if request.method == 'GET':
+        articoli = Articolo.objects.filter(venditore = request.user.venditore).all()
+        num_comparse = Counter(articoli)
+        num_comparse = sorted(num_comparse.items(), key=lambda x: x[1], reverse=True)
+        articoli = [c[0] for c in num_comparse]
+        return render(request, 'miei_articoli.html', {'articoli': articoli})
+    return render(request, 'errore.html')
