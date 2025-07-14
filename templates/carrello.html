@@ -3,7 +3,7 @@
 {% load static %}
 {% load filters %}
 
-{% block title %}Ricerca{% endblock %}
+{% block title %}Carrello{% endblock %}
 
 {% block css %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
@@ -58,14 +58,22 @@
                                     </div>
                                     <p>({{ l.len }})</p>
                                 </div>
-                                <form method="post" action="{% url 'acquista' l.articolo.id %}">
-                                    {% csrf_token %}
-                                    <p>Num. disponibili: {{ l.articolo.num_articoli }}</p>
-                                    <div class="acquista mb-4">
-                                        <button type="submit" class="btn btn-warning">Acquista</button>
+                                {% if perms.shop.puo_acquistare_articolo %}
+                                    <form method="post" action="{% url 'acquista' l.articolo.id %}">
+                                        {% csrf_token %}
+                                        <p>Num. disponibili: {{ l.articolo.num_articoli }}</p>
+                                        <div class="acquista mb-4">
+                                            <button type="submit" class="btn btn-warning">Acquista</button>
+                                        </div>
+                                    </form>
+                                {% endif %}
+                                {% if perms.shop.puo_eliminare_carrello_articolo %}
+                                    <form method="POST" action="{% url 'elimina_carrello_articolo' l.articolo.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger">Elimina</button>
+                                    </form>
                                     </div>
-                                </form>
-                            </div>
+                                {% endif %}
                         </div>
                     </div>
                 </div>

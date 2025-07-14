@@ -13,11 +13,10 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-10 profilo">
-                <form method="post" action="{% url 'modifica_profilo_acquirente' %}">
+                <form method="post" action="{% url 'modifica_profilo_venditore' %}">
                     {% csrf_token %}
                     {{ user_form.as_div }}
-                    {{ acquirente_form.as_div }}
-                    {{ portafoglio_form.as_div }}
+                    {{ venditore_form.as_div }}
                     <button type="submit" class="btn btn-primary">Modifica</button>
                 </form>
             </div>

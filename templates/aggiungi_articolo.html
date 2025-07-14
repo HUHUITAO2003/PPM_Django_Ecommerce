@@ -15,14 +15,13 @@
             <div class="col-10 ">
                 <form method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
-                    {{ form.as_p }}
-                    {{ i_form.as_p }}
+                    {{ form.as_div }}
+                    {{ i_form.as_div }}
 
-                    {{ i_formset.management_form }}
-                    {% for form in i_formset %}
-                        {{ form.as_p }}
-                    {% endfor %}
-
+                    <div>
+                        <label for="immagini">Immagini:</label>
+                        <input type="file" multiple name="immagini" id="immagini">
+                    </div>
                     <button type="submit">Salva Articolo</button>
                 </form>
             </div>

@@ -3,7 +3,7 @@
 {% load static %}
 {% load filters %}
 
-{% block title %}Ricerca{% endblock %}
+{% block title %}Ordini{% endblock %}
 
 {% block css %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
@@ -11,8 +11,6 @@
 {% endblock %}
 
 {% block content %}
-    <!-- path -->
-
     <div class="container">
         <h1>Ordini</h1>
     </div>
@@ -46,7 +44,8 @@
                                                 <i class="fa-solid fa-star"></i>
                                                 <i class="fa-solid fa-star"></i>
                                             </div>
-                                            <div class="filled" style="width: calc({{ ordine.valutazione.voto }} / 5 * 100%)">
+                                            <div class="filled"
+                                                 style="width: calc({{ ordine.valutazione.voto }} / 5 * 100%)">
                                                 <i class="fa-solid fa-star"></i>
                                                 <i class="fa-solid fa-star"></i>
                                                 <i class="fa-solid fa-star"></i>
@@ -56,18 +55,15 @@
                                         </div>
                                     </div>
                                     <p>{{ ordine.valutazione.commento }}</p>
-                                {% else %}
-                                    <a href="{% url 'valutazione' ordine.id %}"
-                                       class="btn btn-outline-primary">Valuta</a>
                                 {% endif %}
+                                <a href="{% url 'valutazione' ordine.id %}"
+                                   class="btn btn-outline-primary">Valuta</a>
                             </div>
                         </div>
                     </div>
                 </div>
             {% endfor %}
         </div>
-
-
     </div>
 
 {% endblock %}

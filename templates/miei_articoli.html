@@ -6,12 +6,36 @@
 {% block title %}Ricerca{% endblock %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'risultato.css' %}?v={{ now|date:'U' }}">
+    <link rel="stylesheet" href="{% static 'articolo.css' %}?v={{ now|date:'U' }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
 {% endblock %}
 
 {% block content %}
     <div class="container mt-3">
         <h1>I miei articoli</h1>
+    </div>
+    <div class="container">
+        <h2>Valutazione media di tutte le votazioni:</h2>
+        <div class="valutazione">
+            <p>{{ valutazione_media }}: </p>
+            <div class="stelle">
+                <div class="not_filled">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                </div>
+                <div class="filled" style="width: calc({{ valutazione_media }} / 5 * 100%)">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                </div>
+            </div>
+            <p>({{ num_voti }})</p>
+        </div>
     </div>
     <div class="container">
         <p>Numero articoli: {{ articoli|length }}</p>

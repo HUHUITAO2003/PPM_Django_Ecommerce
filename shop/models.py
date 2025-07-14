@@ -22,7 +22,7 @@ class Articolo(models.Model):
     venditore = models.ForeignKey(Venditore, on_delete=models.CASCADE)
     categoria = models.CharField(max_length=2, choices=Categoria.choices, default=Categoria.GENERALE)
     descrizione = models.TextField()
-    num_articoli = models.IntegerField()
+    num_articoli = models.IntegerField(validators=[MinValueValidator(0)])
     sconto_percentuale = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)])
     visualizzabile = models.BooleanField(default=True)
 
@@ -34,6 +34,8 @@ class Articolo(models.Model):
             ("puo_modificare_articolo", "Può modificare un'articolo"),
             ("puo_acquistare_articolo", "Può acquistare un'articolo"),
             ("puo_aggiungere_articolo", "Può aggiungere un'articolo"),
+            ("puo_visualizzare_articoli_venditore", "Può visualizzare gli articoli di un venditore"),
+            ("puo_eliminare_articolo", "Può eliminare l'articolo di un venditore")
         ]
 
 
@@ -47,7 +49,7 @@ class Immagine(models.Model):
 
 
 class Carrello(models.Model):
-    articoli = models.ManyToManyField(Articolo)
+    articoli = models.ManyToManyField(Articolo, blank=True)
     acquirente = models.OneToOneField(Acquirente, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -57,6 +59,7 @@ class Carrello(models.Model):
         permissions = [
             ("puo_aggiungere_carrello", "Può aggiungere nel carrello un articolo"),
             ("puo_visualizzare_carrello", "Può visualizzare gli articoli nel carrello"),
+            ("puo_eliminare_carrello_articolo", "Può eliminare un'articolo nel carrello"),
         ]
 
 

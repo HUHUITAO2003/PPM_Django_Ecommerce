@@ -3,7 +3,7 @@
 {% load static %}
 {% load filters %}
 
-{% block title %}Modifica profilo{% endblock %}
+{% block title %}Accedi{% endblock %}
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'profilo_acquirente.css' %}?v={{ now|date:'U' }}">
@@ -13,11 +13,9 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-10 profilo">
-                <form method="post" action="{% url 'modifica_profilo_acquirente' %}">
+                <form method="post" action="{% url 'modifica_articolo' articolo_id %}">
                     {% csrf_token %}
-                    {{ user_form.as_div }}
-                    {{ acquirente_form.as_div }}
-                    {{ portafoglio_form.as_div }}
+                    {{ form.as_div }}
                     <button type="submit" class="btn btn-primary">Modifica</button>
                 </form>
             </div>

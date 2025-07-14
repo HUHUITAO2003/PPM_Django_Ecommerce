@@ -69,52 +69,79 @@
                         <s>{{ articolo.prezzo }}€</s>
                     </h1>
                 {% endif %}
-                    <p>Num. disponibili: {{ articolo.num_articoli }}</p>
-                    {% if perms.shop.puo_acquistare_articolo %}
-                        <div class="acquista mb-4">
-                            <a class="btn btn-warning" href="{% url 'acquista' articolo.id %}" >Acquista</a>
-                        </div>
-                    {% endif %}
+                <p>Num. disponibili: {{ articolo.num_articoli }}</p>
+                {% if perms.shop.puo_acquistare_articolo %}
+                    <div class="acquista mb-4">
+                        <a class="btn btn-warning" href="{% url 'acquista' articolo.id %}">Acquista</a>
+                    </div>
+                {% endif %}
 
-                    {% if perms.shop.puo_aggiungere_carrello %}
-                        <div class="carrello">
-                            <a href="{% url 'aggiungi_carrello' articolo.id %}" class="btn btn-danger">Aggiungi in Carrello</a>
-                        </div>
-                    {% endif %}
-            <!--
-                <form method="post" action="{% url 'aggiungi_carrello' articolo.id %}">
-                    {% csrf_token %}
-                    {% if perms.shop.puo_aggiungere_carrello %}
-                        <div class="carrello">
-                            <button type="submit" class="btn btn-danger">Aggiungi in Carrello</button>
-                        </div>
-                    {% endif %}
-                </form>
--->
+                {% if perms.shop.puo_aggiungere_carrello %}
+                    <div class="carrello">
+                        <a href="{% url 'aggiungi_carrello' articolo.id %}" class="btn btn-danger">Aggiungi in
+                            Carrello</a>
+                    </div>
+                {% endif %}
+
+                {% if perms.shop.puo_modificare_articolo %}
+                    <div class="carrello">
+                        <a href="{% url 'modifica_articolo' articolo.id %}" class="btn btn-warning mb-2">Modifica
+                            articolo</a>
+                    </div>
+                    <div class="carrello">
+                        <a href="{% url 'modifica_immagini' articolo.id %}" class="btn btn-primary">Modifica
+                            immagini</a>
+                    </div>
+                {% endif %}
+
+                {% if perms.shop.puo_eliminare_articolo %}
+                    <div class="carrello mt-3 mb-3">
+                        <a href="{% url 'elimina_articolo' articolo.id %}" class="btn btn-danger">Elimina</a>
+                    </div>
+                {% endif %}
+
             </div>
 
+        </div>
 
 
+    </div>
 
-            {% for articolo in articoli %}
-                <div class="col-3">
-                    <a href="{% url 'articolo' articolo.id %}">
-                        <div class="card w-100">
-                            <img src="{{ articolo.profilo.immagine.url }}" class="card-img-top">
+    <div class="container">
+        <h1>Commenti</h1>
+    </div>
+    <div class="container risultati">
+        <div class="row">
+            {% for valutazione in valutazioni %}
+                <div class="card mb-3">
+                    <div class="row g-0">
+                        <div class="col-md-8">
                             <div class="card-body">
-                                {% if articolo.sconto_percentuale == 0 %}
-                                    <h5 class="card-title"><h1>{{ articolo.prezzo }}€</h1></h5>
-                                {% else %}
-                                    <h5 class="card-title">
-                                        <h1>{{ articolo.prezzo|calcolo_prezzo_scontato:articolo.sconto_percentuale }}€
-                                            <s>{{ articolo.prezzo }}€</s></h1></h5>
-                                {% endif %}
-
-                                <p class="card-text">{{ articolo.nome }}</p>
-                                <a href="#" class="btn btn-primary">Acquista</a>
+                                <div class="valutazione">
+                                    <p>{{ valutazione.voto }}: </p>
+                                    <div class="stelle">
+                                        <div class="not_filled">
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                        </div>
+                                        <div class="filled"
+                                             style="width: calc({{ valutazione.voto }} / 5 * 100%)">
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h3>{{ valutazione.ordine.acquirente.user.username }}</h3>
+                                <p>{{ valutazione.commento }}</p>
                             </div>
                         </div>
-                    </a>
+                    </div>
                 </div>
             {% endfor %}
         </div>

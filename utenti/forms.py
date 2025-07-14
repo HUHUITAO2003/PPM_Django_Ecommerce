@@ -16,4 +16,4 @@ class AcquirenteForm(forms.ModelForm):
 class PortafoglioForm(forms.ModelForm):
     class Meta:
         model = Portafoglio
-        exclude = ["utente"]
+        exclude = ["acquirente"]

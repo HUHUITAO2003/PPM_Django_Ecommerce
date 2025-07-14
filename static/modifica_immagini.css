@@ -11,10 +11,18 @@
     width: 20rem;
 }
 
+.immagini form{
+    display: inline;
+}
+
 p {
     margin-top: 1rem;
 }
 
 form > div {
     margin-bottom: 2rem;
+}
+
+img{
+    max-width: 200px;
 }

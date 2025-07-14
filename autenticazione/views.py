@@ -7,7 +7,6 @@ from autenticazione.forms import CustomUserCreationForm
 from utenti.models import Portafoglio, Acquirente, Venditore
 
 
-# Create your views here.
 def accedi_view(request):
     if request.method == "POST":
         form = AuthenticationForm(data=request.POST)
@@ -23,17 +22,6 @@ def accedi_view(request):
         form = AuthenticationForm()
     return render(request, 'accedi.html', {'form': form})
 
-"""
-def accesso_view(request):
-    email = request.POST.get('email')
-    password = request.POST.get('password')
-    user = authenticate(request, email=email, password=password)
-    if user is not None:
-        login(request, user)
-        return redirect("home_page")
-    else:
-        return render(request, 'errore.html')
-"""
 
 def registrazione_view(request):
     if request.method == "GET":
@@ -43,7 +31,6 @@ def registrazione_view(request):
         elif ruolo == 'venditore':
             return registrazione_venditore_view(request)
     return render(request, 'scelta_registrazione.html')
-
 
 
 def registrazione_acquirente_view(request):
@@ -63,10 +50,6 @@ def registrazione_acquirente_view(request):
     return render(request, 'registrati_acquirente.html', {'form': form})
 
 
-def logout_view(request):
-    logout(request)
-    return redirect('home_page')
-
 def registrazione_venditore_view(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
@@ -81,19 +64,8 @@ def registrazione_venditore_view(request):
     else:
         form = CustomUserCreationForm()
     return render(request, 'registrati_venditore.html', {'form': form})
-"""
-def profilo_view(request):
-    if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            denominazione = request.POST['denominazione']
-            Venditore.objects.create(user=user, denominazione=denominazione)
 
-            group = Group.objects.get(name='Venditori')
-            user.groups.add(group)
-            return redirect('accedi')
-    else:
-        form = CustomUserCreationForm()
-    return render(request, 'registrati_venditore.html', {'form': form})
-"""
+
+def logout_view(request):
+    logout(request)
+    return redirect('home_page')

@@ -32,11 +32,11 @@ class Acquirente(models.Model):
         ]
 
 class Portafoglio(models.Model):
-    utente = models.OneToOneField(Acquirente, on_delete=models.CASCADE)
+    acquirente = models.OneToOneField(Acquirente, on_delete=models.CASCADE)
     credito = models.DecimalField(max_digits=15, decimal_places=2, validators=[MinValueValidator(0.0)])
 
     def __str__(self):
-        return 'portafoglio_utente_' + str(self.utente.pk) + '_' + self.utente.user.username
+        return 'portafoglio_acquirente_' + str(self.acquirente.pk) + '_' + self.acquirente.user.username
 
     class Meta:
         permissions = [

@@ -28,4 +28,6 @@ urlpatterns = [
     path('profilo/', include("utenti.urls")),
 ]
 
+handler403 = "pagine.views.custom_403_view"
+
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

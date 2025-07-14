@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load filters %}
+
+{% block title %}Accedi{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'modifica_immagini.css' %}?v={{ now|date:'U' }}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-10 profilo">
+                <h2>Immagini dell'articolo: {{ articolo.nome }}</h2>
+
+                {% for img in immagini %}
+                    <div class="mb-2 immagini">
+                        <img src="{{ img.immagine.url }}">
+                        <form method="POST" action="{% url 'elimina_immagine' articolo.id %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="elimina_id" value="{{ img.id }}">
+                            <button type="submit" class="btn btn-danger">Elimina</button>
+                        </form>
+                    </div>
+                {% empty %}
+                    <p>Nessuna immagine presente.</p>
+                {% endfor %}
+                <form method="POST" class="mt-3 mb-3" enctype="multipart/form-data" action="{% url 'carica_immagini' articolo.id %}">
+                    {% csrf_token %}
+                    <input type="file" multiple name="immagini">
+                    <button type="submit" class="btn btn-primary">Carica immagini</button>
+                </form>
+                <div class="alert alert-secondary mt-3" role="alert">
+                    se vuoi cancellare l'immagine profilo, aggiornala prima con una nuova.
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block navbar_right %}
+{% endblock %}

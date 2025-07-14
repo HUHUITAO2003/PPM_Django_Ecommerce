@@ -1,15 +1,12 @@
 from django.contrib.auth.decorators import permission_required, login_required
-from django.http import HttpResponse
 from django.shortcuts import render
 
 from autenticazione.forms import CustomUserChangeForm
-from utenti.forms import AcquirenteForm, PortafoglioForm
+from utenti.forms import AcquirenteForm, PortafoglioForm, VenditoreForm
 
 
-# Create your views here.
 def profilo_view(request):
-    if hasattr(request.user, "acquirente"):
-        request.is_modify = False
+    if request.user.has_perm("utenti.puo_visualizzare_profilo_acquirente"):
         user = request.user
         user_form = CustomUserChangeForm(instance=user)
         acquirente_form = AcquirenteForm(instance=user.acquirente)
@@ -21,12 +18,21 @@ def profilo_view(request):
         portafoglio_form.fields["credito"].disabled = True
         return render(request, "profilo.html",
                       {"forms": [user_form, acquirente_form, portafoglio_form]})
-    elif hasattr(request.user, "venditore"):
-        return HttpResponse("Venditore")
+    elif request.user.has_perm("utenti.puo_visualizzare_profilo_venditore"):
+        user = request.user
+        user_form = CustomUserChangeForm(instance=user)
+        venditore_form = VenditoreForm(instance=user.venditore)
+        for field in user_form.fields:
+            user_form.fields[field].disabled = True
+        for field in venditore_form.fields:
+            venditore_form.fields[field].disabled = True
+        return render(request, "profilo.html",
+                      {"forms": [user_form, venditore_form]})
     else:
-        return render(request, "errore.html")
+        return render(request, "errore.html", {"messaggio": "non hai eseguito il login, non abbiamo il tuo profilo."})
 
 
+@permission_required("utenti.puo_modificare_profilo_acquirente")
 def modifica_profilo_acquirente_view(request):
     if request.method == "POST":
         user_form = CustomUserChangeForm(request.POST, instance=request.user)
@@ -51,7 +57,6 @@ def modifica_profilo_acquirente_view(request):
 
 
 @permission_required('utenti.puo_aggiungere_credito')
-@login_required(login_url="/autenticazione/accedi/")
 def aggiungi_credito_view(request):
     codice_credito = {"4a44dc15364204a80fe80e9039455cc1608281820fe2b24f1e5233ade6af1dd5": 10,
                       "f5ca38f748a1d6eaf726b8a42fb575c3c71f1864a8143301782de13da2d9202b": 20,
@@ -71,18 +76,23 @@ def aggiungi_credito_view(request):
     else:
         return render(request, "aggiungi_credito.html")
 
-"""
-    if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            denominazione = request.POST['denominazione']
-            Venditore.objects.create(user=user, denominazione=denominazione)
 
-            group = Group.objects.get(name='Venditori')
-            user.groups.add(group)
-            return redirect('accedi')
+@permission_required("utenti.puo_modificare_profilo_venditore")
+def modifica_profilo_venditore_view(request):
+    if request.method == "POST":
+        user_form = CustomUserChangeForm(request.POST, instance=request.user)
+        venditore_form = VenditoreForm(request.POST, instance=request.user.venditore)
+        if venditore_form.is_valid() and user_form.is_valid():
+            user_form.save()
+            venditore_form.save()
+            return profilo_view(request)
+        else:
+            print("\033[91mVenditoreForm errors:\033[0m", venditore_form.errors)
+            print("\033[91mUserForm errors:\033[0m", user_form.errors)
+            return render(request, "errore.html")
     else:
-        form = CustomUserCreationForm()
-    return render(request, 'registrati_venditore.html', {'form': form})
-"""
+        user = request.user
+        user_form = CustomUserChangeForm(instance=user)
+        venditore_form = VenditoreForm(instance=user.venditore)
+        return render(request, "modifica_profilo_venditore.html",
+                      {"user_form": user_form, "venditore_form": venditore_form})
