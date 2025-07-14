@@ -20,3 +20,15 @@ Per gli ordini effettuati è possibile lasciare una valutazione che attribuirà 
 - **Articoli**: visualizzare gli articoli aggiunti dal venditore, aggiungere articoli e relative immagini e modificarle. Vi è un bottone per eliminare un articolo ma non viene eliminato dal db ma messo a True un flag di visibilità per garantire la rintracciabilità del venditore di ogni articolo venduto.
 - **Carrello**: gli articoli possono essere aggiunti in un carrello, possono essere tolti in automatico quando avviene un acquisto oppure tramite bottone nella pagina della visualizzazione.
 - **Profilo**: vengono visualizzati i dati dell'Acquirente, modificabili.
+
+## Utilizzo
+### profili già esistenti
+* acquirente_1
+* acquirente_2
+* acquirente_3
+* venditore_elettronica
+* venditore_cancelleria
+* venditore_cibo
+
+password identica per tutti i profili: **passwordEcommerce** 
+ 
