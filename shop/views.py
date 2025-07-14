@@ -44,22 +44,24 @@ def acquista_view(request, articolo_id):
 
     prezzo_scontato = calcolo_prezzo_scontato(articolo.prezzo, articolo.sconto_percentuale)
 
-    if portafoglio.credito >= prezzo_scontato:
-        portafoglio.credito -= prezzo_scontato
-        portafoglio.save()
-        Ordine.objects.create(
-            articolo=articolo,
-            acquirente=acquirente,
-            data_acquisto=datetime.date.today(),
-            prezzo_acquisto=prezzo_scontato
-        )
-        articolo.num_articoli -= 1
-        articolo.save()
-        if articolo in acquirente.carrello.articoli.all():
-            acquirente.carrello.articoli.remove(articolo)
-        return ordini_view(request)
-    else:
+    if portafoglio.credito < prezzo_scontato:
         return render(request, "errore.html", {"messaggio": "Credito insufficiente"})
+    if articolo.num_articoli<=0:
+        return render(request, "errore.html", {"messaggio": "Articolo non disponibile"})
+
+    portafoglio.credito -= prezzo_scontato
+    portafoglio.save()
+    Ordine.objects.create(
+        articolo=articolo,
+        acquirente=acquirente,
+        data_acquisto=datetime.date.today(),
+        prezzo_acquisto=prezzo_scontato
+    )
+    articolo.num_articoli -= 1
+    articolo.save()
+    if acquirente.carrello and articolo in acquirente.carrello.articoli.all():
+        acquirente.carrello.articoli.remove(articolo)
+    return ordini_view(request)
 
 
 @permission_required('shop.puo_visualizzare_ordini')
