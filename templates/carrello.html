@@ -6,7 +6,7 @@
 {% block title %}Carrello{% endblock %}
 
 {% block css %}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
+    <link rel="stylesheet" href="{% static 'font-awesome.css' %}?v={{ now|date:'U' }}"/>
     <link rel="stylesheet" href="{% static 'ordini.css' %}?v={{ now|date:'U' }}">
 {% endblock %}
 
