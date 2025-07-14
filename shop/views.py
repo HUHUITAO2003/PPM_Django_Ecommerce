@@ -97,11 +97,7 @@ def aggiungi_carrello_view(request, articolo_id):
     acquirente = Acquirente.objects.get(user=request.user)
     articolo = Articolo.objects.get(id=articolo_id)
     carrello = Carrello.objects.filter(acquirente=acquirente).first()
-    if carrello is None:
-        carrello = Carrello.objects.create(acquirente=acquirente)
-        carrello.articoli.add(articolo)
-    else:
-        carrello.articoli.add(articolo)
+    carrello.articoli.add(articolo)
     return carrello_view(request)
 
 
