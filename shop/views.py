@@ -77,7 +77,7 @@ def valutazione_view(request, ordine_id):
         ordine = Ordine.objects.get(id=ordine_id)
         voto = request.POST.get("stelle")
         commento = request.POST.get("commento")
-        if ordine.valutazione is not None:
+        if hasattr(ordine, "valutazione"):
             ordine.valutazione.voto = voto
             ordine.valutazione.commento = commento
             ordine.valutazione.save()
