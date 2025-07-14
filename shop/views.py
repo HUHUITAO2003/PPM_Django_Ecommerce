@@ -3,6 +3,7 @@ from collections import Counter
 
 from PIL import Image
 from django.contrib.auth.decorators import login_required, permission_required
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect
 
 from shop.forms import ArticoloForm, ImmagineForm
@@ -30,7 +31,8 @@ def articolo_view(request, articolo_id):
     valutazione = valutazione_media_articolo(articolo_id)
     valutazioni = Valutazione.objects.filter(ordine__articolo_id=articolo_id).all()
     return render(request, 'articolo.html',
-                  {'articolo': articolo, 'valutazione_media': valutazione[0], 'num_voti': valutazione[1], "valutazioni": valutazioni})
+                  {'articolo': articolo, 'valutazione_media': valutazione[0], 'num_voti': valutazione[1],
+                   "valutazioni": valutazioni})
 
 
 # Acquirente
@@ -46,7 +48,7 @@ def acquista_view(request, articolo_id):
 
     if portafoglio.credito < prezzo_scontato:
         return render(request, "errore.html", {"messaggio": "Credito insufficiente"})
-    if articolo.num_articoli<=0:
+    if articolo.num_articoli <= 0:
         return render(request, "errore.html", {"messaggio": "Articolo non disponibile"})
 
     portafoglio.credito -= prezzo_scontato
@@ -77,11 +79,11 @@ def valutazione_view(request, ordine_id):
         ordine = Ordine.objects.get(id=ordine_id)
         voto = request.POST.get("stelle")
         commento = request.POST.get("commento")
-        if hasattr(ordine, "valutazione"):
+        try:
             ordine.valutazione.voto = voto
             ordine.valutazione.commento = commento
             ordine.valutazione.save()
-        else:
+        except ObjectDoesNotExist:
             Valutazione.objects.create(ordine=ordine, voto=voto, commento=commento)
         return ordini_view(request)
     else:
