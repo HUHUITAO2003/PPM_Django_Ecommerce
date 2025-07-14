@@ -41,7 +41,7 @@ def registrazione_acquirente_view(request):
             user = form.save()
             indirizzo = request.POST['indirizzo']
             acquirente = Acquirente.objects.create(user=user, indirizzo=indirizzo)
-            carrello = Carrello.objects.create(acquirente=acquirente)
+            Carrello.objects.create(acquirente=acquirente)
             Portafoglio.objects.create(acquirente=acquirente, credito=0)
 
             group = Group.objects.get(name='Acquirenti')
