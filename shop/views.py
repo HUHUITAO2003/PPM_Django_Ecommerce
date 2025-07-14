@@ -59,7 +59,7 @@ def acquista_view(request, articolo_id):
     )
     articolo.num_articoli -= 1
     articolo.save()
-    if acquirente.carrello and articolo in acquirente.carrello.articoli.all():
+    if articolo in acquirente.carrello.articoli.all():
         acquirente.carrello.articoli.remove(articolo)
     return ordini_view(request)
 

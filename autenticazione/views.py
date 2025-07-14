@@ -4,6 +4,7 @@ from django.contrib.auth.models import Group
 from django.shortcuts import render, redirect
 
 from autenticazione.forms import CustomUserCreationForm
+from shop.models import Carrello
 from utenti.models import Portafoglio, Acquirente, Venditore
 
 
@@ -39,7 +40,8 @@ def registrazione_acquirente_view(request):
         if form.is_valid():
             user = form.save()
             indirizzo = request.POST['indirizzo']
-            acquirente = Acquirente.objects.create(user=user, indirizzo=indirizzo)
+            carrello = Carrello.objects.create()
+            acquirente = Acquirente.objects.create(user=user, indirizzo=indirizzo, carrello=carrello)
             Portafoglio.objects.create(acquirente=acquirente, credito=0)
 
             group = Group.objects.get(name='Acquirenti')
